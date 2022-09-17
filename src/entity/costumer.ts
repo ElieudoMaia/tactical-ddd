@@ -1,27 +1,22 @@
 class Costumer {
+  public _isActive: boolean = true;
+
   constructor(
-    private _id: string,
-    private _name: string,
-    private _address: string
+    public _id: string,
+    public _name: string,
+    public _address: string
   ) {}
 
-  get id(): string {
-    return this._id;
-  }
-
-  get name(): string {
-    return this._name;
-  }
-
-  get address(): string {
-    return this._address;
-  }
-
-  set name(name: string) {
+  changeName(name: string) {
+    if (name.length > 255) throw new Error("Name is too long");
     this._name = name;
   }
 
-  set address(address: string) {
-    this._address = address;
+  activate() {
+    this._isActive = true;
+  }
+
+  deactivate() {
+    this._isActive = false;
   }
 }
