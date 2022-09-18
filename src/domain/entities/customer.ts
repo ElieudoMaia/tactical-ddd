@@ -1,6 +1,6 @@
-import { Address } from './address';
+import { Address } from "./address";
 
-export class Costumer {
+export class Customer {
   private _id: string = "";
   private _name: string = "";
   private _address?: Address;
@@ -18,7 +18,7 @@ export class Costumer {
   }
 
   private validateID() {
-    if (!this._id) throw new Error("ID is required");
+    if (!this._id) throw new Error("Id is required");
   }
 
   private validateName() {
@@ -33,7 +33,7 @@ export class Costumer {
 
   public activate() {
     if (!this._address) {
-      throw new Error("Address is required to activate the costumer");
+      throw new Error("Address is required to activate the customer");
     }
     this._isActive = true;
   }
@@ -43,6 +43,22 @@ export class Costumer {
   }
 
   public setAddress(address: Address) {
-    this._address = address
+    this._address = address;
+  }
+
+  get id(): string {
+    return this._id;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get address(): Address | null {
+    return this?._address || null;
+  }
+
+  get isActive(): boolean {
+    return this._isActive;
   }
 }
