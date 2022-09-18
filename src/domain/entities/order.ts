@@ -1,4 +1,4 @@
-import OrderItem from "./order-item";
+import { OrderItem } from "./order-item";
 
 export class Order {
   public _id: string;
@@ -9,13 +9,14 @@ export class Order {
     this._id = id;
     this._costumerId = costumerId;
     this._items = items;
-    this.validate()
+    this.validate();
   }
 
   private validate() {
-    if (!this._id) throw new Error("Id is required")
-    if (!this._costumerId) throw new Error("customerId is required")
-    if (!this._items || !this._items.length) throw new Error("items are required")
+    if (!this._id) throw new Error("Id is required");
+    if (!this._costumerId) throw new Error("customerId is required");
+    if (!this._items || !this._items.length)
+      throw new Error("items are required");
   }
 
   getTotal(): number {
