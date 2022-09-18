@@ -1,7 +1,9 @@
-class Costumer {
+import { Address } from './address';
+
+export class Costumer {
   private _id: string = "";
   private _name: string = "";
-  private _address: string = "";
+  private _address?: Address;
   private _isActive: boolean = true;
 
   constructor(id: string, name: string) {
@@ -38,5 +40,9 @@ class Costumer {
 
   public deactivate() {
     this._isActive = false;
+  }
+
+  public setAddress(address: Address) {
+    this._address = address
   }
 }
