@@ -17,9 +17,12 @@ export class Order {
     if (!this._costumerId) throw new Error("customerId is required");
     if (!this._items || !this._items.length)
       throw new Error("items are required");
+    for (const item of this._items) {
+      if (item.quantity <= 0) throw new Error("Quantity must be greater than 0");
+    }
   }
 
   getTotal(): number {
-    return this._items.reduce((acc, item) => acc + item._price, 0);
+    return this._items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   }
 }
