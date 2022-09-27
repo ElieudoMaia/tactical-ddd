@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "tsc",
-    "test": "jest --watch"
+    "test": "npm run tsc -- --noEmit && jest",
+    "tsc": "tsc"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.57",
