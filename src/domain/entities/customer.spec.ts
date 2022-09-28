@@ -1,5 +1,5 @@
-import { Address } from './address';
-import { Customer } from './customer';
+import { Address } from "./address";
+import { Customer } from "./customer";
 
 describe("Customer unit tests", () => {
   it("should throw an error when id is empty", () => {
@@ -39,5 +39,16 @@ describe("Customer unit tests", () => {
     const customer = new Customer("1", "Customer 1");
     customer.deactivate();
     expect(customer.isActive).toBe(false);
+  });
+
+  it("should add reward points", () => {
+    const customer = new Customer("1", "Customer 1");
+    expect(customer.rewardPoints).toBe(0);
+
+    customer.addRewardPoints(10);
+    expect(customer.rewardPoints).toBe(10);
+
+    customer.addRewardPoints(10);
+    expect(customer.rewardPoints).toBe(20);
   });
 });
