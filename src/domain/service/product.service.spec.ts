@@ -1,4 +1,4 @@
-import { Product } from '../entities/product';
+import { Product } from '../entity/product';
 import ProductService from './product.service';
 
 describe('Product services unit tests', () => {
