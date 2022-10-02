@@ -43,7 +43,7 @@ export class Customer {
     this._isActive = false;
   }
 
-  public setAddress(address: Address) {
+  public changeAddress(address: Address) {
     this._address = address;
   }
 
@@ -69,5 +69,9 @@ export class Customer {
 
   get rewardPoints(): number {
     return this._rewardPoints;
+  }
+
+  set address(address: Address) {
+    this._address = address;
   }
 }
