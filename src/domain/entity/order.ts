@@ -12,6 +12,18 @@ export class Order {
     this.validate();
   }
 
+  get id(): string {
+    return this._id;
+  }
+
+  get customerId(): string {
+    return this._costumerId;
+  }
+
+  get items(): OrderItem[] {
+    return this._items;
+  }
+
   private validate() {
     if (!this._id) throw new Error("Id is required");
     if (!this._costumerId) throw new Error("customerId is required");
