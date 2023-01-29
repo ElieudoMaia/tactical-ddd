@@ -60,7 +60,7 @@ export class Customer {
   }
 
   get address(): Address | null {
-    return this?._address || null;
+    return this?._address;
   }
 
   get isActive(): boolean {
