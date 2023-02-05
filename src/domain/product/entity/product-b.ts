@@ -26,24 +26,28 @@ export default class ProductB implements ProductInterface {
 
   changeName(name: string): void {
     this._name = name;
-    this.validate();
+    this.validateName();
   }
 
   changePrice(price: number): void {
     this._price = price;
-    this.validate();
+    this.validatePrice();
   }
 
-  validate(): boolean {
-    if (this._id.length === 0) {
+  validate() {
+    if (!this._id || this._id.length === 0) {
       throw new Error("Id is required");
     }
-    if (this._name.length === 0) {
-      throw new Error("Name is required");
-    }
-    if (this._price < 0) {
+    this.validateName();
+    this.validatePrice();
+  }
+
+  private validateName(): void {
+    if (!this._name) throw new Error("Name is required");
+  }
+
+  private validatePrice(): void {
+    if (!this._price || this._price < 0)
       throw new Error("Price must be greater than zero");
-    }
-    return true;
   }
 }

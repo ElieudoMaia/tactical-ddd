@@ -1,4 +1,4 @@
-import ProductInterface from './product.interface';
+import ProductInterface from "./product.interface";
 
 export class Product implements ProductInterface {
   private _id: string;
@@ -14,16 +14,27 @@ export class Product implements ProductInterface {
 
   validate(): void {
     if (!this._id) throw new Error("Id is required");
+    this.validateName();
+    this.validatePrice();
+  }
+
+  private validateName(): void {
     if (!this._name) throw new Error("Name is required");
-    if (this._price < 0) throw new Error("Price must be greater than zero");
+  }
+
+  private validatePrice(): void {
+    if (!this._price || this._price < 0)
+      throw new Error("Price must be greater than zero");
   }
 
   public changeName(name: string): void {
     this._name = name;
+    this.validateName();
   }
 
   public changePrice(price: number): void {
     this._price = price;
+    this.validatePrice();
   }
 
   get id(): string {
