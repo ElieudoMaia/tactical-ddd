@@ -1,3 +1,4 @@
+import { NotificationError } from "../../../domain/@shared/notification/notification.error";
 import CustomerRepositoryInterface from "../../../domain/customer/repository/customer-repository.interface";
 import { CreateCustomerUseCase } from "./create.customer.usecase";
 
@@ -42,13 +43,24 @@ describe("Unit test Create customer use case", () => {
     const customerRepository = makeMockRepository();
     const createCustomerUseCase = new CreateCustomerUseCase(customerRepository);
     const inputWithNoName = { ...input, name: "" };
-    await expect(createCustomerUseCase.execute(inputWithNoName)).rejects.toThrow("Name is required");
+    await expect(
+      createCustomerUseCase.execute(inputWithNoName)
+    ).rejects.toThrowError(
+      new NotificationError([
+        { message: "Name is required", context: "Customer" },
+      ])
+    );
   });
 
   it("should throw an error when address.street is missing", async () => {
     const customerRepository = makeMockRepository();
     const createCustomerUseCase = new CreateCustomerUseCase(customerRepository);
-    const inputWithNoName = { ...input, address: { ...input.address, street: "" } };
-    await expect(createCustomerUseCase.execute(inputWithNoName)).rejects.toThrow("Street is required");
+    const inputWithNoName = {
+      ...input,
+      address: { ...input.address, street: "" },
+    };
+    await expect(
+      createCustomerUseCase.execute(inputWithNoName)
+    ).rejects.toThrow("Street is required");
   });
 });

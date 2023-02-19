@@ -1,16 +1,26 @@
-import { Address } from '../value-object/address';
+import { Entity } from "../../@shared/entity/entity.abstract";
+import { NotificationError } from "../../@shared/notification/notification.error";
+import { Address } from "../value-object/address";
 
-export class Customer {
-  private _id: string = "";
+export class Customer extends Entity {
   private _name: string = "";
   private _address?: Address;
   private _isActive: boolean = true;
   private _rewardPoints: number = 0;
 
   constructor(id: string, name: string) {
+    super();
     this._id = id;
     this._name = name;
     this.validate();
+
+    this.checkForErrors();
+  }
+
+  private checkForErrors() {
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.errors);
+    }
   }
 
   private validate() {
@@ -19,17 +29,47 @@ export class Customer {
   }
 
   private validateID() {
-    if (!this._id) throw new Error("Id is required");
+    if (!this._id || !this._id.length) {
+      this.notification.addError({
+        message: "Id is required",
+        context: "Customer",
+      });
+    }
   }
 
   private validateName() {
-    if (!this._name) throw new Error("Name is required");
-    if (this._name.length > 255) throw new Error("Name is too long");
+    if (!this._name) {
+      this.notification.addError({
+        message: "Name is required",
+        context: "Customer",
+      });
+    }
+    if (this._name.length > 255) {
+      this.notification.addError({
+        message: "Name is too long",
+        context: "Customer",
+      });
+    }
   }
 
   public changeName(name: string) {
     this._name = name;
-    this.validateName();
+    const errosOnChangeName = []
+    if (!this._name) {
+      errosOnChangeName.push({
+        message: "Name is required",
+        context: "Customer",
+      });
+    }
+    if (this._name.length > 255) {
+      errosOnChangeName.push({
+        message: "Name is too long",
+        context: "Customer",
+      });
+    }
+    if (errosOnChangeName.length) {
+      throw new NotificationError(errosOnChangeName);
+    }
   }
 
   public activate() {
@@ -49,10 +89,6 @@ export class Customer {
 
   public addRewardPoints(points: number) {
     this._rewardPoints += points;
-  }
-
-  get id(): string {
-    return this._id;
   }
 
   get name(): string {
