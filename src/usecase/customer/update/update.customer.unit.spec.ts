@@ -46,15 +46,6 @@ describe("Unit test for update customer use case", () => {
     );
   });
 
-  test("should throw an error when name is missing", async () => {
-    const customerRepository = makeMockRepository();
-    const updateCustomer = new UpdateCustomerUseCase(customerRepository);
-    const inputWithNoName = { ...input, name: "" };
-    await expect(updateCustomer.execute(inputWithNoName)).rejects.toThrow(
-      "Name is required"
-    );
-  });
-
   test("should throw an error when address.street is missing", async () => {
     const customerRepository = makeMockRepository();
     const updateCustomer = new UpdateCustomerUseCase(customerRepository);
@@ -64,6 +55,15 @@ describe("Unit test for update customer use case", () => {
     };
     await expect(updateCustomer.execute(inputWithNoStreet)).rejects.toThrow(
       "Street is required"
+    );
+  });
+
+  test("should throw an error when name is missing", async () => {
+    const customerRepository = makeMockRepository();
+    const updateCustomer = new UpdateCustomerUseCase(customerRepository);
+    const inputWithNoName = { ...input, name: "" };
+    await expect(updateCustomer.execute(inputWithNoName)).rejects.toThrow(
+      "Name is required"
     );
   });
 });
