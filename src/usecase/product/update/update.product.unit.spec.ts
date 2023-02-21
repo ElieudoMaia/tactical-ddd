@@ -3,7 +3,7 @@ import { ProductRepositoryInterface } from "../../../domain/product/repository/p
 import { InputUpdateProductDTO } from "./update.product.dto";
 import { UpdateProductUseCase } from "./update.product.usecase";
 
-const product = ProductFactory.create("a", "John", 10);
+let product = ProductFactory.create("a", "John", 10);
 
 const input: InputUpdateProductDTO = {
   id: product.id,
@@ -48,9 +48,17 @@ describe("Unit tests for product update", () => {
   });
 
   it("should throw an error when price is missing", async () => {
+    // REFACTOR THIS TEST
+    /*
+     *  Foi necessário recriar o produto, pois como a mesma instância é usada em todos os testes,
+     *  a instância do produto já estava com o nome alterado e o teste não estava passando.
+     *
+     *  Na minha visão, o correto seria recriar o produto em cada teste, o que os tornaria independentes.
+     */
+    product = ProductFactory.create("a", "John", 10);
     const productRepository = makeMockRepository();
     const updateProductUseCase = new UpdateProductUseCase(productRepository);
-    const inputWithNoPrice = { ...input, price: 0 };
+    const inputWithNoPrice = { ...input, price: -1 };
     await expect(
       updateProductUseCase.execute(inputWithNoPrice)
     ).rejects.toThrow("Price must be greater than zero");

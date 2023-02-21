@@ -1,10 +1,12 @@
 import { Entity } from "../../@shared/entity/entity.abstract";
 import { NotificationError } from "../../@shared/notification/notification.error";
+import { ProductValidatorFactory } from "../factory/product.validator.factory";
 import ProductInterface from "./product.interface";
 
 export class Product extends Entity implements ProductInterface {
   private _name: string;
   private _price: number = 0;
+  private validator = ProductValidatorFactory.create();
 
   constructor(id: string, name: string, price: number) {
     super();
@@ -16,14 +18,7 @@ export class Product extends Entity implements ProductInterface {
   }
 
   validate(): void {
-    if (!this._id) {
-      this.notification.addError({
-        message: "Id is required",
-        context: "Product",
-      });
-    }
-    this.validateName();
-    this.validatePrice();
+    this.validator.validate(this);
   }
 
   private checkForErrors() {
@@ -32,46 +27,16 @@ export class Product extends Entity implements ProductInterface {
     }
   }
 
-  private validateName(): void {
-    if (!this._name) {
-      this.notification.addError({
-        message: "Name is required",
-        context: "Product",
-      });
-    }
-  }
-
-  private validatePrice(): void {
-    if (!this._price || this._price < 0) {
-      this.notification.addError({
-        message: "Price must be greater than zero",
-        context: "Product",
-      });
-    }
-  }
-
   public changeName(name: string): void {
     this._name = name;
-    if (!this._name) {
-      throw new NotificationError([
-        {
-          message: "Name is required",
-          context: "Product",
-        },
-      ]);
-    }
+    this.validator.validate(this);
+    this.checkForErrors();
   }
 
   public changePrice(price: number): void {
     this._price = price;
-    if (!this._price || this._price < 0) {
-      throw new NotificationError([
-        {
-          message: "Price must be greater than zero",
-          context: "Product",
-        },
-      ]);
-    }
+    this.validator.validate(this);
+    this.checkForErrors();
   }
 
   get name(): string {
