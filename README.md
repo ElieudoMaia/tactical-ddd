@@ -1,12 +1,15 @@
-## Projeto aplicando práticas do DDD
+# Tactical DDD
 
-Projeto de referência: https://github.com/devfullcycle/fc-ddd-patterns
+## Tactical Design of an Application
 
+### Description
 
-- Porque não há necessidade de DTOs para comunicação entre o caso de uso e o repositório?
-- Não seria melhor que produto A e B fossem implementações de uma classe abstrata?
-- Nos testes de integração, devo usar outros métodos do repositório (além dos que estão sendo testados no momento), ou uso o model do sequelize diretamente?
-- Devo fazer testes de integração usecase + repositório e controller + usecase + repositório?
-- As configurações do express não poderiam ficar em uma camada de "Presentation"
-- nos testes E2E, eu poderia verificar diretamente no banco de dados para saber se os dados foram manipuilados de forma correta?
-- O deveria alterar o valor na minha instância, mesmo antes de validá-lo?
+This application is an example of tactical DDD design, developed in NodeJS with TypeScript. It follows development best practices and design patterns to adhere to Clean Architecture principles. The application is fully tested with Jest to ensure reliability and maintainability.
+
+### How to run the tests?
+
+`npm test`
+
+### How to run the application?
+
+`npm run dev`
